@@ -48,15 +48,15 @@ fi
 
 gazePlaySave=""
 
-while [ ! -d "$gazePlaySave" ] 
-do
-read -p "Entrez le chemin menant au dossier d'installation de GazePlay: " gazePlaySave
-if [ ! -d "$gazePlaySave" ]; then
- echo "Erreur: \"$gazePlaySave\" n'est pas un dossier valide."
-fi
-done
+#while [ ! -d "$gazePlaySave" ] 
+#do
+#read -p "Entrez le chemin menant au dossier d'installation de GazePlay: " gazePlaySave
+#if [ ! -d "$gazePlaySave" ]; then
+# echo "Erreur: \"$gazePlaySave\" n'est pas un dossier valide."
+#fi
+# done
 
-echo "$gazePlaySave" > configuration.conf
+#echo "$gazePlaySave" > configuration.conf
   
 export JAVA_CMD="${WORKING_DIR}/../lib/jre/bin/java -cp \"$CLASSPATH\" ${JAVA_OPTS} main.Main $gazePlaySave"
 
