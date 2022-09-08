@@ -23,10 +23,14 @@ jobs:
           chmod -R 777 build/jre
 
       - name: Run Gradle Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ./gradlew --stacktrace --info packageApp
+
+      - name: Genrate Windows Installer with InnoSetup
+        run: |
+          chmod 777 build/distributions
+          chmod -R 777 build/jre
+          ./gradlew --stacktrace --info generateWindowsInstallerInDocker
 
       - name: Get Env
         run: |
@@ -70,4 +74,5 @@ jobs:
             ./build/distributions/InterAACtionBox_Interface-noJRE.tar.gz
             ./build/distributions/InterAACtionBox_Interface-noJRE.zip
             ./build/distributions/InterAACtionBox_Interface-windows.zip
+            ./build/distributions/InterAACtionBoxAFSR-windows-x64-installer.exe
           github-token: ${{ secrets.GITHUB_TOKEN }}

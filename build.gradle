@@ -15,6 +15,8 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.8'
     id 'io.freefair.lombok' version '4.1.4'
     id 'com.github.spotbugs' version '2.0.0'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'com.github.hierynomus.license-report' version '0.15.0'
 }
 
 ext.javafxVersion = "11.0.2"
@@ -41,6 +43,7 @@ apply plugin: 'distribution'
 apply from: "${rootDir}/gradle/package.gradle"
 apply from: "${rootDir}/gradle/jre.gradle"
 apply from: "${rootDir}/gradle/drivers.gradle"
+apply from: "${rootDir}/gradle/installer.gradle"
 
 sourceSets {
     main {
@@ -57,6 +60,8 @@ spotbugs {
     //effort = "max"
     //reportLevel = "high"
 }
+
+mainClassName = 'main.Main'
 
 jar {
     manifest {
@@ -113,11 +118,32 @@ distributions {
         contents {
             with distributions.main.contents
             from("build/reports")
-            from("build/bin/interaactionBoxOS-windows.bat") {
+            from("bin/interaactionBoxOS-windows.bat") {
                 into 'bin'
+            }
+            from("scriptsWindows") {
+                into 'lib/scriptsWindows'
             }
             from("build/jre/windows-x64") {
                 into 'lib/jre'
+            }
+            from("python") {
+                into 'lib/python'
+            }
+            from("wget") {
+                into 'lib/wget'
+            }
+            from("GoogleChromePortable/App") {
+                into 'lib/google/App'
+            }
+            from("GoogleChromePortable/Other") {
+                into 'lib/google/Other'
+            }
+            from("GoogleChromePortable/GoogleChromePortable.exe") {
+                into 'lib/google/'
+            }
+            from("GoogleChromePortable/Data.zip") {
+                into 'lib/google/'
             }
         }
     }
@@ -126,7 +152,7 @@ distributions {
         contents {
             with distributions.main.contents
             from("build/reports")
-            from("bin") {
+            from("bin/interaactionBoxOS-linux.sh") {
                 into 'bin'
             }
             from("build/jre/linux-x64") {
@@ -143,6 +169,16 @@ distributions {
             }
         }
     }
+}
+
+tasks.jar.dependsOn('createLicence')
+
+task createLicence(dependsOn: ['processResources'], type: Copy, group: 'license') {
+    from("${rootDir}/gradle/templates/licence.txt")
+    expand([
+            "date"  : new Date().format('yyyy-MM-dd')
+    ])
+    into("${processResources.destinationDir}/data/common")
 }
 
 task('downloadAndExtractLinuxDependecies').dependsOn('downloadAndExtractLinuxJREwithLibavPlugin', 'downloadAndExtractTobiiDriversForLinux')
@@ -164,9 +200,7 @@ tasks.withType(Tar){
     archiveExtension.set('tar.gz')
 }
 
-distZip {
-    duplicatesStrategy = 'exclude'
-}
-
 defaultTasks 'clean', 'build'
 startScripts.enabled = false
+
+afterReleaseBuild.dependsOn generateWindowsInstallerInDocker

@@ -6,7 +6,7 @@ import java.net.URLConnection;
 
 public class UtilsOS {
 
-    private static final String OS = System.getProperty("os.name").toLowerCase();
+    public static final String OS = System.getProperty("os.name").toLowerCase();
 
     public static boolean isWindows() {
 
@@ -42,7 +42,7 @@ public class UtilsOS {
         return username.replace(" ","_");
     }
 
-    public static String getUserNameFromOSForGazePlay(){
+    public static String getUserNameFromOS(){
         return System.getProperty("user.name");
     }
 

@@ -62,8 +62,11 @@ public class ProgressDoubleClickedButtonI18N extends StackPane {
     }
 
     public void deactivate(){
-        this.button.removeEventFilter(MouseEvent.MOUSE_ENTERED, enterButtonHandler);
-        this.button.removeEventFilter(MouseEvent.MOUSE_EXITED, exitButtonHandler);
+        try {
+            this.button.removeEventFilter(MouseEvent.MOUSE_ENTERED, enterButtonHandler);
+            this.button.removeEventFilter(MouseEvent.MOUSE_EXITED, exitButtonHandler);
+        } catch (Exception ignored) {
+        }
     }
 
     private void enable() {

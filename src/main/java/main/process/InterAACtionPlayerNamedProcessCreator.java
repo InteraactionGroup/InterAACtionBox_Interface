@@ -5,6 +5,8 @@ import main.process.xdotoolProcess.GoogleChromeXdotoolProcessCreator;
 import main.utils.NamedProcess;
 import main.utils.UtilsOS;
 
+import java.io.IOException;
+
 public class InterAACtionPlayerNamedProcessCreator implements AppNamedProcessCreator {
 
     ProcessBuilder processBuilder;

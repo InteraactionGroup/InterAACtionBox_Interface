@@ -6,6 +6,8 @@ import main.process.xdotoolProcess.GnomeControlCenterXdotoolProcessCreator;
 import main.utils.NamedProcess;
 import main.utils.UtilsOS;
 
+import java.io.IOException;
+
 @Slf4j
 public class GnomeControlCenterNamedProcessCreator implements AppNamedProcessCreator {
 
@@ -26,8 +28,34 @@ public class GnomeControlCenterNamedProcessCreator implements AppNamedProcessCre
         if (UtilsOS.isUnix()) {
             return AppNamedProcessCreator.createProcress(new GnomeControlCenterXdotoolProcessCreator(), processBuilder, graphicalMenus, "Gnome Control Center");
         } else {
-            return new NamedProcess();
-        }
-    }
 
+            String cmd = "";
+            switch (this.panelToOpen){
+
+                case "wifi" :
+                    cmd = "control /name Microsoft.NetworkAndSharingCenter";
+                    break;
+
+                case "display" :
+                    cmd = "control desk.cpl";
+                    break;
+
+                case "power" :
+                    cmd = "control powercfg.cpl";
+                    break;
+
+                default:
+                    cmd = "";
+                    break;
+            }
+
+            ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", cmd);
+            try{
+                builder.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

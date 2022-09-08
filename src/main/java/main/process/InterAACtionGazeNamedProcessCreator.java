@@ -34,7 +34,7 @@ public class InterAACtionGazeNamedProcessCreator {
             }
             String classpath = gazeInstallationRepo + "/lib/*";
 
-            LinkedList<String> commands = new LinkedList<>(Arrays.asList(javaBin, "-cp", classpath, "-Djdk.gtk.version=2", "-jar", gazeInstallationRepo+"/lib/untitled.jar"));
+            LinkedList<String> commands = new LinkedList<>(Arrays.asList(javaBin, "-cp", classpath, "-Djdk.gtk.version=2", "-jar", gazeInstallationRepo+"/lib/interAACtionGaze.jar"));
 
             for(String command:commands){
                 log.info(command);
@@ -68,7 +68,7 @@ public class InterAACtionGazeNamedProcessCreator {
 
     private String getInterAACtionGazeRepo() {
         if (UtilsOS.isWindows()) {
-            return "C:/Program Files (x86)/InteraactionGaze";
+            return "C:\\Users\\" + UtilsOS.getUserNameFromOS() + "\\Documents\\InterAACtionBoxAFSR\\interAACtionGaze";
         } else {
             String text = "../../InterAACtionGaze";
             log.info("InterAACtionGaze directory is: " + text);

@@ -5,6 +5,8 @@ import main.process.xdotoolProcess.GoogleChromeXdotoolProcessCreator;
 import main.utils.NamedProcess;
 import main.utils.UtilsOS;
 
+import java.io.IOException;
+
 public class AugComNamedProcessCreator implements AppNamedProcessCreator {
 
     ProcessBuilder processBuilder;

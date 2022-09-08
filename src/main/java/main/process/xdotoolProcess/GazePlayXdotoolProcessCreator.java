@@ -2,6 +2,7 @@ package main.process.xdotoolProcess;
 
 import lombok.extern.slf4j.Slf4j;
 import main.UI.menu.GraphicalMenus;
+import main.utils.UtilsOS;
 
 @Slf4j
 public class GazePlayXdotoolProcessCreator implements XdotoolProcessCreator {
@@ -10,10 +11,14 @@ public class GazePlayXdotoolProcessCreator implements XdotoolProcessCreator {
 
     @Override
     public void setUpProcessBuilder() {
-        processBuilder = new ProcessBuilder(
-                "sh",
-                "./scripts/gazeplay_windowId.sh"
-        );
+        if (UtilsOS.isUnix()){
+            processBuilder = new ProcessBuilder(
+                    "sh",
+                    "./scripts/gazeplay_windowId.sh"
+            );
+        }else {
+            processBuilder = new ProcessBuilder("");
+        }
     }
 
     @Override

@@ -1,19 +1,24 @@
 package main;
 
-import javafx.beans.property.BooleanProperty;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.Scene;
 import lombok.Getter;
 import lombok.Setter;
+import main.utils.UtilsOS;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Configuration {
 
-    public final static String VERSION = "InterAACtionBox-Interface 1.0.0 Dev v.2021.18.11";
+    public static String VERSION = "";
 
     public final static int MOUSE_INTERACTION = 0;
     public final static int GAZE_INTERACTION = 1;
@@ -30,6 +35,21 @@ public class Configuration {
     public String language = "fra";
 
     public Configuration() {
+        this.getInterfaceVersion();
+    }
+
+    @SuppressFBWarnings
+    public void getInterfaceVersion(){
+        String version = "";
+        try{
+            File file = new File("C:\\Users\\" + UtilsOS.getUserNameFromOS() + "\\Documents\\InterAACtionBoxAFSR\\Version\\InterAACtionBox_InterfaceVersion.txt");
+            Scanner scanner = new Scanner(file, StandardCharsets.UTF_8);
+            version = scanner.nextLine();
+            scanner.close();
+        } catch (IOException e) {
+            System.out.println("No version found !");
+        }
+        VERSION = version;
     }
 
     public boolean isGazeInteraction() {

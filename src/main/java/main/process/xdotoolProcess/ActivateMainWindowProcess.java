@@ -7,9 +7,7 @@ import java.io.IOException;
 public class ActivateMainWindowProcess {
 
     public static void start() {
-        if (UtilsOS.isWindows()) {
-            //Do Nothing
-        } else {
+        if (UtilsOS.isUnix()) {
             try {
                 ProcessBuilder processBuilderRaise = new ProcessBuilder("xdotool", "search", "--onlyvisible", "--classname", "--sync", "--main.Main", "windowraise");
                 processBuilderRaise.start();

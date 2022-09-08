@@ -5,6 +5,8 @@ import main.process.xdotoolProcess.GoogleChromeXdotoolProcessCreator;
 import main.utils.NamedProcess;
 import main.utils.UtilsOS;
 
+import java.io.IOException;
+
 public class InterAACtionSceneNamedProcessCreator implements AppNamedProcessCreator {
 
     ProcessBuilder processBuilder;
@@ -20,13 +22,11 @@ public class InterAACtionSceneNamedProcessCreator implements AppNamedProcessCrea
                 "--disable-features=Translate",
                 "--autoplay-policy=no-user-gesture-required",
                 "http://localhost:4201/#/fr/connect/" + UtilsOS.getUserNameFromOSForPWA());
-
     }
 
     @Override
     public NamedProcess start(GraphicalMenus graphicalMenus) {
         return AppNamedProcessCreator.createProcressAndWaitForClose(new GoogleChromeXdotoolProcessCreator(), new CloseGoogleChromeProcessCreator(), processBuilder, graphicalMenus, "InteraactionScene");
-
     }
 
 }

@@ -94,8 +94,8 @@ public class UtilsUI {
         backgroundForTitle.setFill(Color.web("#cd2653"));
 
         EventHandler goToHomeMenu = (e) -> {
-            InterAACtionGazeNamedProcessCreator interAACtionGazeNamedProcessCreator = new InterAACtionGazeNamedProcessCreator();
-            interAACtionGazeNamedProcessCreator.reOpen();
+            /*InterAACtionGazeNamedProcessCreator interAACtionGazeNamedProcessCreator = new InterAACtionGazeNamedProcessCreator();
+            interAACtionGazeNamedProcessCreator.reOpen();*/
             graphicalMenus.getConfiguration().scene.setRoot(parent);
         };
 

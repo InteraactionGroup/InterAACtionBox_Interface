@@ -29,15 +29,9 @@ import main.gaze.devicemanager.TobiiGazeDeviceManager;
 import main.process.*;
 import main.process.xdotoolProcess.ActivateMainWindowProcess;
 import main.utils.*;
-import tobii.Tobii;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class HomeScreen extends BorderPane {
@@ -60,8 +54,6 @@ public class HomeScreen extends BorderPane {
 
         this.getChildren().add(UtilsUI.createBackground(graphicalMenus));
 
-        //String tobiiNotConnected = Arrays.toString(Tobii.gazePosition());
-
         centerMenu = new VBox();
 
         centerMenu.setAlignment(Pos.TOP_CENTER);
@@ -72,7 +64,6 @@ public class HomeScreen extends BorderPane {
 
         goToUpdateMenu = (e) -> {
             interAACtionGazeNamedProcessCreator.close();
-            updateManager.checkUpdates();
             graphicalMenus.getConfiguration().scene.setRoot(graphicalMenus.getUpdateMenu());
         };
 
@@ -180,9 +171,13 @@ public class HomeScreen extends BorderPane {
         title.setAlignment(Pos.CENTER);
         titlePane.getChildren().addAll(backgroundForTitle, titleBox);
 
-
-        titleBox.setLeft(new HBox(optionButton, updateButton));
-        titleBox.setRight(new HBox(gazeButton, calibrationButton, exitButton));
+        if (UtilsOS.isUnix()){
+            titleBox.setLeft(new HBox(optionButton, updateButton));
+            titleBox.setRight(new HBox(gazeButton, calibrationButton, exitButton));
+        }else {
+            titleBox.setLeft(new HBox(optionButton, updateButton));
+            titleBox.setRight(new HBox(gazeButton, exitButton));
+        }
 
         BorderPane.setAlignment(titlePane, Pos.CENTER_LEFT);
 
