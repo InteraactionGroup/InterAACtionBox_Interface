@@ -25,6 +25,9 @@ ext {
     download = download
 }
 
+// To launch the app with gradle
+mainClassName = 'main.Main'
+
 javafx {
     version = javafxVersion
     modules = ['javafx.controls', 'javafx.swing', 'javafx.media', 'javafx.web']

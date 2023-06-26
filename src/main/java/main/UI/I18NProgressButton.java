@@ -18,12 +18,12 @@ import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import main.Configuration;
 
 @Slf4j
 public class I18NProgressButton extends StackPane {
 
-    private static final int FIXATION_LENGTH = 3000;
-
+    Configuration configuration;
     @Getter
     private final Circle button;
     private final VBox imageAndText;
@@ -36,8 +36,9 @@ public class I18NProgressButton extends StackPane {
 
     private boolean started = false;
 
-    public I18NProgressButton() {
+    public I18NProgressButton(Configuration configuration) {
         super();
+        this.configuration = configuration;
         timelineProgressBar = new Timeline();
 
         button = new Circle();
@@ -139,7 +140,7 @@ public class I18NProgressButton extends StackPane {
                 timelineProgressBar.getKeyFrames().clear();
                 timelineProgressBar.setDelay(new Duration(500));
                 timelineProgressBar.getKeyFrames().add(
-                        new KeyFrame(new Duration(I18NProgressButton.FIXATION_LENGTH), new KeyValue(indicator.progressProperty(), 1)));
+                        new KeyFrame(new Duration(this.configuration.dwellTime), new KeyValue(indicator.progressProperty(), 1)));
 
                 timelineProgressBar.onFinishedProperty().set(actionEvent -> {
                     indicator.setOpacity(0);

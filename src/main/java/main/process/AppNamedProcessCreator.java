@@ -90,7 +90,7 @@ public interface AppNamedProcessCreator {
     void setUpProcessBuilder();
 
     default I18NProgressButton createButton(String name, Image image, GraphicalMenus graphicalMenus, Configuration configuration) {
-        I18NProgressButton progressButton = new I18NProgressButton();
+        I18NProgressButton progressButton = new I18NProgressButton(configuration);
         progressButton.getButton().setRadius(graphicalMenus.primaryStage.getWidth() / 10);
 
         ImageView logo = new ImageView(image);

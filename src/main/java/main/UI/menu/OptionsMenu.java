@@ -1,5 +1,7 @@
 package main.UI.menu;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -60,14 +62,31 @@ public class OptionsMenu extends BorderPane {
                     useEyeTrackerCheckBox.setStyle(style);
                 }
             });
+
+            I18NLabel dwellTimeTitle = new I18NLabel(translator,"Dwelltime:");
+            dwellTimeTitle.setStyle("-fx-font-weight: bold; -fx-font-family: Helvetica; -fx-font-size: 3em ; -fx-text-fill: #cd2653");
+
+            TextField dwellTime = new TextField();
+            dwellTime.setMaxWidth(80);
+            dwellTime.setText("2000");
+            dwellTime.setDisable(true);
+            dwellTime.textProperty().addListener((observable, oldValue, newValue) -> {
+                dwellTime.setText(newValue.replaceAll("[^\\d]", ""));
+                if (Objects.equals(dwellTime.getText(), "")){
+                    dwellTime.setText("2000");
+                }
+                configuration.dwellTime = Integer.parseInt(dwellTime.getText());
+                log.info("Dwelltime = " + configuration.dwellTime);
+            });
+
             useEyeTrackerCheckBox.selectedProperty().addListener((obj, oldval, newval) -> {
                 if (newval) {
                     graphicalMenus.getConfiguration().setMode(Configuration.GAZE_INTERACTION);
+                    dwellTime.setDisable(false);
                     log.info("Configuration.GAZE_INTERACTION : {}", configuration.isGazeInteraction());
-                    graphicalMenus.getConfiguration().setMode(Configuration.MOUSE_INTERACTION);
-                    useEyeTrackerCheckBox.setSelected(false);
                 } else {
                     graphicalMenus.getConfiguration().setMode(Configuration.MOUSE_INTERACTION);
+                    dwellTime.setDisable(true);
                     log.info("Configuration.GAZE_INTERACTION : {}", configuration.isGazeInteraction());
                 }
             });
@@ -79,12 +98,14 @@ public class OptionsMenu extends BorderPane {
             settings.add(useEyeTracker, 0, 1);
             settings.add(useEyeTrackerCheckBox, 1, 1);
             settings.add(errorEyeTracker, 2, 1);
+            settings.add(dwellTimeTitle, 0, 2);
+            settings.add(dwellTime, 1, 2);
         }
 
-        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Gestionnaire Wifi:", "images/wi-fi_white.png", "wifi", 2);
-        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Gestionnaire Bluetooth:", "images/bluetooth.png", "bluetooth", 3);
-        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Param\u00e8tres D'Affichage:", "images/notebook.png", "display", 4);
-        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Param\u00e8tres de Batterie:", "images/battery.png", "power", 5);
+        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Gestionnaire Wifi:", "images/wi-fi_white.png", "wifi", 3);
+        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Gestionnaire Bluetooth:", "images/bluetooth.png", "bluetooth", 4);
+        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Param\u00e8tres D'Affichage:", "images/notebook.png", "display", 5);
+        createGnomeControlCenterButtonI18N(translator, graphicalMenus, settings, "Param\u00e8tres de Batterie:", "images/battery.png", "power", 6);
         createGnomeControlCenterButtonLang(translator, settings, configuration);
 
         {
@@ -103,8 +124,8 @@ public class OptionsMenu extends BorderPane {
 
             userInformationButton.setTextFill(Color.web("#faeaed"));
 
-            settings.add(userInformationLabel, 0, 8);
-            settings.add(userInformationButton, 1, 8);
+            settings.add(userInformationLabel, 0, 9);
+            settings.add(userInformationButton, 1, 9);
         }
 
         {
@@ -127,8 +148,8 @@ public class OptionsMenu extends BorderPane {
 
             changePasswordButton.setTextFill(Color.web("#faeaed"));
 
-            settings.add(changePasswordLabel, 0, 7);
-            settings.add(changePasswordButton, 1, 7);
+            settings.add(changePasswordLabel, 0, 8);
+            settings.add(changePasswordButton, 1, 8);
         }
 
         {
@@ -149,8 +170,8 @@ public class OptionsMenu extends BorderPane {
 
             teamViewerButton.setTextFill(Color.web("#faeaed"));
 
-            settings.add(teamviewerLabel, 0, 6);
-            settings.add(teamViewerButton, 1, 6);
+            settings.add(teamviewerLabel, 0, 7);
+            settings.add(teamViewerButton, 1, 7);
         }
 
         settings.setAlignment(Pos.CENTER);

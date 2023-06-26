@@ -128,7 +128,7 @@ public class ExitMenu extends BorderPane {
     }
 
     private StackPane createAppI18NButtonLauncher(Translator translator, EventHandler eventHandler, String name, String imageURL, Configuration configuration) {
-        I18NProgressButton progressButton = new I18NProgressButton();
+        I18NProgressButton progressButton = new I18NProgressButton(configuration);
         progressButton.getButton().setRadius(graphicalMenus.primaryStage.getWidth() / 10);
         progressButton.getButton().setStroke(Color.BLACK);
 

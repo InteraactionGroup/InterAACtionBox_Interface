@@ -24,6 +24,7 @@ public class Configuration {
     public LinkedList<Point2D> currentPoint = new LinkedList<>();
     public IntegerProperty selectionMode = new SimpleIntegerProperty(Configuration.MOUSE_INTERACTION);
     boolean userIsMoving = false;
+    public int dwellTime = 2000;
 
     @Getter
     @Setter

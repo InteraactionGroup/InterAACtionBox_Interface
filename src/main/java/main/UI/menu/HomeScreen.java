@@ -363,7 +363,7 @@ public class HomeScreen extends BorderPane {
     }
 
     public I18NProgressButton createCloseMenuButton(Configuration configuration) {
-        I18NProgressButton closeButton = new I18NProgressButton();
+        I18NProgressButton closeButton = new I18NProgressButton(configuration);
         closeButton.getButton().setRadius(graphicalMenus.primaryStage.getWidth() / 15);
         closeButton.getButton().setStroke(Color.web("#cd2653"));
         closeButton.getButton().setStrokeWidth(3);
