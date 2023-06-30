@@ -69,10 +69,10 @@ public class HomeScreen extends BorderPane {
         double rest = graphicalMenus.primaryStage.getHeight() - (graphicalMenus.primaryStage.getHeight() / 10 + 2 * graphicalMenus.primaryStage.getWidth() / 5);
         centerMenu.setSpacing(rest / 3);
         centerMenu.setTranslateY(rest / 3);
+        updateManager.checkUpdates();
 
         goToUpdateMenu = (e) -> {
             interAACtionGazeNamedProcessCreator.close();
-            updateManager.checkUpdates();
             graphicalMenus.getConfiguration().scene.setRoot(graphicalMenus.getUpdateMenu());
         };
 
